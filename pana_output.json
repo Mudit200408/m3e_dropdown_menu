@@ -1,0 +1,136 @@
+{
+ "createdAt": "2026-03-06T01:06:31.024510",
+ "runtimeInfo": {
+  "panaVersion": "0.23.10",
+  "sdkVersion": "3.11.1",
+  "flutterVersions": {
+   "frameworkVersion": "3.41.4",
+   "channel": "stable",
+   "repositoryUrl": "https://github.com/flutter/flutter.git",
+   "frameworkRevision": "ff37bef603469fb030f2b72995ab929ccfc227f0",
+   "frameworkCommitDate": "2026-03-03 16:03:22 -0800",
+   "engineRevision": "e4b8dca3f1b4ede4c30371002441c88c12187ed6",
+   "engineCommitDate": "2026-03-03 18:24:54.000Z",
+   "engineContentHash": "99578ad0355da00edb26301c874a3c250a5716f5",
+   "engineBuildDate": "2026-03-04 04:11:09.880",
+   "dartSdkVersion": "3.11.1",
+   "devToolsVersion": "2.54.1",
+   "flutterVersion": "3.41.4"
+  }
+ },
+ "packageName": "m3e_dropdown_menu",
+ "packageVersion": "0.0.1",
+ "pubspec": {
+  "name": "m3e_dropdown_menu",
+  "description": "A Flutter package providing Material 3 Expressive Dropdown Menu with spring physics and extensive customization options.",
+  "version": "0.0.1",
+  "homepage": "https://github.com/Mudit200408/m3e_dropdown_menu",
+  "repository": "https://github.com/Mudit200408/m3e_dropdown_menu",
+  "issue_tracker": "https://github.com/Mudit200408/m3e_dropdown_menu/issues",
+  "environment": {
+   "sdk": "^3.11.0",
+   "flutter": ">=3.22.0"
+  },
+  "dependencies": {
+   "flutter": {
+    "sdk": "flutter"
+   },
+   "motor": "^1.1.0"
+  },
+  "dev_dependencies": {
+   "flutter_test": {
+    "sdk": "flutter"
+   },
+   "flutter_lints": "^6.0.0"
+  },
+  "flutter": null
+ },
+ "allDependencies": [
+  "characters",
+  "collection",
+  "equatable",
+  "flutter",
+  "flutter_lints",
+  "flutter_test",
+  "material_color_utilities",
+  "meta",
+  "motor",
+  "vector_math"
+ ],
+ "tags": [
+  "sdk:flutter",
+  "platform:android",
+  "platform:ios",
+  "platform:windows",
+  "platform:linux",
+  "platform:macos",
+  "platform:web",
+  "is:null-safe",
+  "is:wasm-ready",
+  "is:dart3-compatible",
+  "license:unknown"
+ ],
+ "report": {
+  "sections": [
+   {
+    "id": "convention",
+    "title": "Follow Dart file conventions",
+    "grantedPoints": 20,
+    "maxPoints": 30,
+    "status": "failed",
+    "summary": "### [~] 10/10 points: Provide a valid `pubspec.yaml`\n\n<details>\n<summary>\nHomepage URL doesn't exist.\n</summary>\n\nAt the time of the analysis `https://github.com/Mudit200408/m3e_dropdown_menu` was unreachable. Make sure that the website is reachable via [`HEAD`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/HEAD) requests.\n</details>\n\n<details>\n<summary>\nRepository URL doesn't exist.\n</summary>\n\nAt the time of the analysis `https://github.com/Mudit200408/m3e_dropdown_menu` was unreachable. Make sure that the website is reachable via [`HEAD`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/HEAD) requests.\n</details>\n\n<details>\n<summary>\nIssue tracker URL doesn't exist.\n</summary>\n\nAt the time of the analysis `https://github.com/Mudit200408/m3e_dropdown_menu/issues` was unreachable. Make sure that the website is reachable via [`HEAD`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/HEAD) requests.\n</details>\n\n### [*] 5/5 points: Provide a valid `README.md`\n\n### [*] 5/5 points: Provide a valid `CHANGELOG.md`\n\n### [x] 0/10 points: Use an OSI-approved license\n\n<details>\n<summary>\nNo license was recognized.\n</summary>\n\nConsider using an [OSI-approved license](https://opensource.org/licenses) in the `LICENSE` file to make it more accessible to the community.\n</details>\n"
+   },
+   {
+    "id": "documentation",
+    "title": "Provide documentation",
+    "grantedPoints": 20,
+    "maxPoints": 20,
+    "status": "passed",
+    "summary": "### [*] 10/10 points: 20% or more of the public API has dartdoc comments\n\n158 out of 158 API elements (100.0 %) have documentation comments.\n\n### [*] 10/10 points: Package has an example\n"
+   },
+   {
+    "id": "platform",
+    "title": "Platform support",
+    "grantedPoints": 20,
+    "maxPoints": 20,
+    "status": "passed",
+    "summary": "### [*] 20/20 points: Supports 6 of 6 possible platforms (**iOS**, **Android**, **Web**, **Windows**, **macOS**, **Linux**)\n\n* ✓ Android\n\n* ✓ iOS\n\n* ✓ Windows\n\n* ✓ Linux\n\n* ✓ macOS\n\n* ✓ Web\n\n\n**WASM-ready:** This package is compatible with runtime `wasm`. See https://dart.dev/web/wasm for details.\n"
+   },
+   {
+    "id": "analysis",
+    "title": "Pass static analysis",
+    "grantedPoints": 50,
+    "maxPoints": 50,
+    "status": "passed",
+    "summary": "### [*] 50/50 points: code has no errors, warnings, lints, or formatting issues\n"
+   },
+   {
+    "id": "dependency",
+    "title": "Support up-to-date dependencies",
+    "grantedPoints": 40,
+    "maxPoints": 40,
+    "status": "passed",
+    "summary": "### [*] 10/10 points: All of the package dependencies are supported in the latest version\n\n|Package|Constraint|Compatible|Latest|Notes|\n|:-|:-|:-|:-|:-|\n|[`motor`]|`^1.1.0`|1.1.0|1.1.0||\n\n<details><summary>Transitive dependencies</summary>\n\n|Package|Constraint|Compatible|Latest|Notes|\n|:-|:-|:-|:-|:-|\n|[`characters`]|-|1.4.1|1.4.1||\n|[`collection`]|-|1.19.1|1.19.1||\n|[`equatable`]|-|2.0.8|2.0.8||\n|[`material_color_utilities`]|-|0.13.0|0.13.0||\n|[`meta`]|-|1.17.0|1.18.1||\n|[`vector_math`]|-|2.2.0|2.2.0||\n</details>\n\nTo reproduce run `dart pub outdated --no-dev-dependencies --up-to-date --no-dependency-overrides`.\n\n[`motor`]: https://pub.dev/packages/motor\n[`characters`]: https://pub.dev/packages/characters\n[`collection`]: https://pub.dev/packages/collection\n[`equatable`]: https://pub.dev/packages/equatable\n[`material_color_utilities`]: https://pub.dev/packages/material_color_utilities\n[`meta`]: https://pub.dev/packages/meta\n[`vector_math`]: https://pub.dev/packages/vector_math\n\n### [*] 10/10 points: Package supports latest stable Dart and Flutter SDKs\n\n### [*] 20/20 points: Compatible with dependency constraint lower bounds\n\n`pub downgrade` does not expose any static analysis error.\n"
+   }
+  ]
+ },
+ "screenshots": [],
+ "result": {
+  "homepageUrl": "https://github.com/Mudit200408/m3e_dropdown_menu",
+  "repositoryUrl": "https://github.com/Mudit200408/m3e_dropdown_menu",
+  "issueTrackerUrl": "https://github.com/Mudit200408/m3e_dropdown_menu/issues",
+  "repositoryStatus": "inconclusive",
+  "licenses": [
+   {
+    "spdxIdentifier": "unknown"
+   }
+  ],
+  "grantedPoints": 150,
+  "maxPoints": 160
+ },
+ "urlProblems": [],
+ "scores": {
+  "grantedPoints": 150,
+  "maxPoints": 160
+ }
+}
