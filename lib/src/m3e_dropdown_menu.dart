@@ -113,6 +113,9 @@ class M3EDropdownMenu<T> extends StatefulWidget {
   /// Optional builder for each dropdown item – overrides default rendering.
   final M3EDropdownItemBuilder<T>? itemBuilder;
 
+  /// Optional builder for the empty state when no items match the filter.
+  final WidgetBuilder? emptyBuilder;
+
   /// Optional builder for each selected item in the field.
   ///
   /// If provided, replaces the default chip rendering. When using this,
@@ -192,6 +195,7 @@ class M3EDropdownMenu<T> extends StatefulWidget {
     this.searchDecoration = const M3ESearchDecoration(),
     this.itemDecoration = const M3EDropdownItemDecoration(),
     this.itemBuilder,
+    this.emptyBuilder,
     this.selectedItemBuilder,
     this.itemSeparator,
     this.validator,
@@ -223,6 +227,7 @@ class M3EDropdownMenu<T> extends StatefulWidget {
     this.searchDecoration = const M3ESearchDecoration(),
     this.itemDecoration = const M3EDropdownItemDecoration(),
     this.itemBuilder,
+    this.emptyBuilder,
     this.selectedItemBuilder,
     this.itemSeparator,
     this.validator,
@@ -1196,6 +1201,7 @@ class _M3EDropdownMenuState<T> extends State<M3EDropdownMenu<T>>
                   ),
                 )
               else if (filtered.isEmpty)
+                widget.emptyBuilder?.call(context) ??
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Text(

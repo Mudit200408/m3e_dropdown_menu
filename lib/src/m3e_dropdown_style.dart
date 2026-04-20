@@ -124,7 +124,7 @@ class M3EDropdownDecoration {
   /// Gap between the field and the dropdown panel.
   final double marginTop;
 
-  /// Text shown when search yields no matches.
+  /// Text shown when search yields no matches. Ignored when [emptyBuilder] is not null
   final String noItemsFoundText;
 
   /// An optional header widget shown above the items.
