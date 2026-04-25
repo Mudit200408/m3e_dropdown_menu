@@ -119,7 +119,8 @@ class _M3EDropdownMenuItemWidgetState<T>
           Expanded(
             child: Text(
               item.label,
-              style: (item.selected ? id.selectedTextStyle : id.textStyle) ??
+              style:
+                  (item.selected ? id.selectedTextStyle : id.textStyle) ??
                   theme.textTheme.bodyLarge?.copyWith(color: textColor),
             ),
           ),

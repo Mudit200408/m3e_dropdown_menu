@@ -1,73 +1,56 @@
-# M3E Dropdown Menu Example App
+# m3e_dropdown_menu_example
 
-![M3E Intro](https://raw.githubusercontent.com/Mudit200408/m3e_dropdown_menu/main/doc/intro.png)
+A comprehensive example project demonstrating the features of the `m3e_dropdown_menu` package.
 
-This example app demonstrates the various features and configurations of the `m3e_dropdown_menu` package.
+## Features Shown
 
-## 1. Single-select Dropdown
-A basic dropdown selecting one item with animated border radii.
+- **Single-select**: Basic usage with `selectedBorderRadius`.
+- **Multi-select**: Animated chips with custom `openMotion` and `closeMotion`.
+- **Search**: Fuzzy search with debounced filtering.
+- **Form Integration**: Using `M3EDropdownMenu` inside a `Form` with a `validator`.
+- **Async Loading**: Fetching items from a mock API using the `.future()` constructor.
+- **Custom Styling**: Overriding colors, radii, and haptic feedback levels.
+
+## Running the Example
+
+1. Clone the repository.
+2. Navigate to the `example` directory: `cd example`.
+3. Run `flutter pub get`.
+4. Run the app: `flutter run`.
+
+## Code Snippets
+
+### Basic Usage
 ```dart
 M3EDropdownMenu<String>(
-  items: items,
-  singleSelect: true,
-  onSelectionChanged: (selected) {},
+  items: [
+    M3EDropdownItem(label: 'Apple', value: 'apple'),
+    M3EDropdownItem(label: 'Banana', value: 'banana'),
+  ],
+  fieldStyle: M3EDropdownFieldStyle(
+    hintText: 'Choose a fruit',
+    borderRadius: BorderRadius.circular(12),
+  ),
+  onSelectionChanged: (items) => print(items),
 )
 ```
 
-## 2. Multi-select + Search + Chips
-Provides a search bar and displays selected items as animated chips within the dropdown field.
+### Advanced Styling
 ```dart
 M3EDropdownMenu<String>(
-  items: items,
-  searchEnabled: true,
-  showChipAnimation: true,
-  maxSelections: 7,
-  fieldDecoration: M3EDropdownFieldDecoration(showClearIcon: true),
-  onSelectionChanged: (selected) {},
-)
-```
-
-## 3. With Form Validation
-Integrates seamlessly with Flutter's standard `Form` and validations.
-```dart
-M3EDropdownMenu<String>(
-  items: items,
-  singleSelect: true,
-  validator: (selected) {
-    if (selected == null || selected.isEmpty) return 'Required';
-    return null;
-  },
-  autovalidateMode: AutovalidateMode.onUserInteraction,
-  onSelectionChanged: (selected) {},
-)
-```
-
-## 4. Custom Selected Item Builder
-Allows building a custom representation for the selected items (e.g., custom designed chips).
-```dart
-M3EDropdownMenu<String>(
-  items: items,
-  showChipAnimation: true,
-  selectedItemBuilder: (item) {
-    return Chip(
-      avatar: Icon(Icons.check_circle),
-      label: Text(item.label),
-    );
-  },
-  onSelectionChanged: (selected) {},
-)
-```
-
-## 5. Async Data Loading
-Loads dropdown items asynchronously via a `Future`.
-```dart
-M3EDropdownMenu<int>.future(
-  future: () async {
-    await Future.delayed(Duration(seconds: 2));
-    return fetchedItems;
-  },
-  singleSelect: true,
-  fieldDecoration: M3EDropdownFieldDecoration(hintText: 'Loading…'),
-  onSelectionChanged: (selected) {},
+  items: fruitItems,
+  fieldStyle: M3EDropdownFieldStyle(
+    selectedBorderRadius: 28,
+    hoverRadius: 16,
+    pressedRadius: 8,
+    showClearIcon: true,
+  ),
+  itemStyle: M3EDropdownItemStyle(
+    outerRadius: 18,
+    innerRadius: 6,
+    hoverRadius: 8,
+    pressedRadius: 4,
+  ),
+  openMotion: M3EMotion.expressiveSpatialFast,
 )
 ```

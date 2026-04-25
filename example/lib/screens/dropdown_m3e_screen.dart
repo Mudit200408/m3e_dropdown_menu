@@ -53,7 +53,7 @@ class _DropdownM3EScreenState extends State<DropdownM3EScreen> {
                   pressedRadius: 6,
                   selectedBorderRadius: 99,
                   splashColor: Colors.purple,
-                  splashFactory: InkSplash.splashFactory
+                  splashFactory: InkSplash.splashFactory,
                 ),
                 onSelectionChanged: (items) {
                   debugPrint('Single: ${items.map((e) => e.label)}');

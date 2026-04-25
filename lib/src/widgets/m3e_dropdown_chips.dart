@@ -14,7 +14,7 @@ class M3ESpringChip<T> extends StatefulWidget {
   final bool enabled;
   final VoidCallback onRemove;
   final double
-      slideOffset; // how much to slide left when a previous chip is removed
+  slideOffset; // how much to slide left when a previous chip is removed
 
   /// When non-null, replaces the default chip body with this widget.
   final Widget? customChild;
@@ -142,7 +142,8 @@ class M3ESpringChipState<T> extends State<M3ESpringChip<T>>
           children: [
             Text(
               widget.item.label,
-              style: widget.labelStyle?.copyWith(
+              style:
+                  widget.labelStyle?.copyWith(
                     color: widget.enabled
                         ? widget.labelStyle?.color
                         : Colors.grey,
@@ -159,7 +160,8 @@ class M3ESpringChipState<T> extends State<M3ESpringChip<T>>
                   child: GestureDetector(
                     behavior: HitTestBehavior.opaque,
                     onTap: widget.onRemove,
-                    child: widget.cd.deleteIcon ??
+                    child:
+                        widget.cd.deleteIcon ??
                         Icon(
                           Icons.close,
                           size: 16,
@@ -182,7 +184,7 @@ class M3EChipFlowDelegate extends FlowDelegate {
   final double spacing;
 
   M3EChipFlowDelegate({required this.slideAnimations, required this.spacing})
-      : super(repaint: Listenable.merge(slideAnimations));
+    : super(repaint: Listenable.merge(slideAnimations));
 
   @override
   void paintChildren(FlowPaintingContext context) {

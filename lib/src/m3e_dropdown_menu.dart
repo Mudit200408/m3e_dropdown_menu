@@ -92,7 +92,7 @@ class M3EDropdownMenu<T> extends StatefulWidget {
   // ── Shape ──
 
   /// Radius applied to the dropdown panel container and (when no
-  /// [M3EDropdownFieldDecoration.borderRadius] is set) the field.
+  /// [M3EDropdownFieldStyle.borderRadius] is set) the field.
   ///
   /// Defaults to `28.0`.
   final double containerRadius;
@@ -129,7 +129,7 @@ class M3EDropdownMenu<T> extends StatefulWidget {
 
   /// An optional widget placed between dropdown items.
   ///
-  /// When non-null, overrides `itemGap` inside [M3EDropdownItemDecoration.itemGap] and is used as the separator in
+  /// When non-null, overrides `itemGap` inside [M3EDropdownItemStyle.itemGap] and is used as the separator in
   /// the dropdown item list.
   final Widget? itemSeparator;
 
@@ -510,7 +510,8 @@ class _M3EDropdownMenuState<T> extends State<M3EDropdownMenu<T>>
           _openingShowOnTop = true;
           break;
         case ExpandDirection.auto:
-          _openingShowOnTop = spaceBelow < widget.dropdownStyle.maxHeight &&
+          _openingShowOnTop =
+              spaceBelow < widget.dropdownStyle.maxHeight &&
               spaceAbove > spaceBelow;
           break;
       }
@@ -557,9 +558,9 @@ class _M3EDropdownMenuState<T> extends State<M3EDropdownMenu<T>>
     final baseRadius = _controller.isOpen && fd.selectedBorderRadius != null
         ? BorderRadius.circular(fd.selectedBorderRadius!)
         : (fd.borderRadius ??
-            BorderRadius.circular(
-              widget.dropdownStyle.containerRadius ?? widget.containerRadius,
-            ));
+              BorderRadius.circular(
+                widget.dropdownStyle.containerRadius ?? widget.containerRadius,
+              ));
 
     if (_isPressedField && fd.pressedRadius != null) {
       return BorderRadius.circular(fd.pressedRadius!);
@@ -644,8 +645,7 @@ class _M3EDropdownMenuState<T> extends State<M3EDropdownMenu<T>>
                     listenable: _listenable,
                     builder: (_, _) {
                       return Semantics(
-                        label:
-                            widget.fieldStyle.hintText ?? 'Dropdown field',
+                        label: widget.fieldStyle.hintText ?? 'Dropdown field',
                         button: true,
                         enabled: widget.enabled,
                         child: Focus(
@@ -664,12 +664,14 @@ class _M3EDropdownMenuState<T> extends State<M3EDropdownMenu<T>>
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Text(
                     formState.errorText!,
-                    style: (widget.fieldStyle.errorStyle ??
-                            Theme.of(context).textTheme.bodySmall)
-                        ?.copyWith(
-                      color: widget.fieldStyle.errorStyle?.color ??
-                          Theme.of(context).colorScheme.error,
-                    ),
+                    style:
+                        (widget.fieldStyle.errorStyle ??
+                                Theme.of(context).textTheme.bodySmall)
+                            ?.copyWith(
+                              color:
+                                  widget.fieldStyle.errorStyle?.color ??
+                                  Theme.of(context).colorScheme.error,
+                            ),
                   ),
                 ),
               ],
@@ -706,7 +708,8 @@ class _M3EDropdownMenuState<T> extends State<M3EDropdownMenu<T>>
           showOnTop = true;
           break;
         case ExpandDirection.auto:
-          showOnTop = spaceBelow < widget.dropdownStyle.maxHeight &&
+          showOnTop =
+              spaceBelow < widget.dropdownStyle.maxHeight &&
               spaceAbove > spaceBelow;
           break;
       }
@@ -773,14 +776,16 @@ class _M3EDropdownMenuState<T> extends State<M3EDropdownMenu<T>>
 
     final bgColor = fd.backgroundColor ?? cs.surfaceContainerHighest;
     final fgColor = fd.foregroundColor ?? cs.onSurface;
-    final borderSide = (formState.hasError
+    final borderSide =
+        (formState.hasError
             ? fd.errorBorder
             : (_controller.isOpen ? fd.focusedBorder : fd.border)) ??
         BorderSide.none;
 
     Widget? trailing;
     if (_isLoading) {
-      trailing = fd.loadingWidget ??
+      trailing =
+          fd.loadingWidget ??
           const SizedBox(
             width: 18,
             height: 18,
@@ -908,7 +913,8 @@ class _M3EDropdownMenuState<T> extends State<M3EDropdownMenu<T>>
           end: _buildEffectiveFieldRadius(),
         ),
         builder: (context, animatedRadius, child) {
-          final effectiveRadius = animatedRadius ?? _buildEffectiveFieldRadius();
+          final effectiveRadius =
+              animatedRadius ?? _buildEffectiveFieldRadius();
           return Material(
             color: bgColor,
             clipBehavior: Clip.antiAlias,
@@ -937,10 +943,7 @@ class _M3EDropdownMenuState<T> extends State<M3EDropdownMenu<T>>
               onTapDown: (_) => setState(() => _isPressedField = true),
               onTapUp: (_) => setState(() => _isPressedField = false),
               onTapCancel: () => setState(() => _isPressedField = false),
-              child: Padding(
-                padding: fd.padding,
-                child: child,
-              ),
+              child: Padding(padding: fd.padding, child: child),
             ),
           );
         },
@@ -1242,8 +1245,7 @@ class _M3EDropdownMenuState<T> extends State<M3EDropdownMenu<T>>
           color: dd.backgroundColor ?? cs.surfaceContainerHighest,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(
-              widget.dropdownStyle.containerRadius ??
-                  widget.containerRadius,
+              widget.dropdownStyle.containerRadius ?? widget.containerRadius,
             ),
           ),
           clipBehavior: Clip.antiAlias,
@@ -1269,15 +1271,15 @@ class _M3EDropdownMenuState<T> extends State<M3EDropdownMenu<T>>
                 )
               else if (filtered.isEmpty)
                 widget.emptyBuilder?.call(context) ??
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Text(
-                    dd.noItemsFoundText,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: cs.onSurface.withValues(alpha: 0.5),
-                    ),
-                  ),
-                )
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Text(
+                        dd.noItemsFoundText,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: cs.onSurface.withValues(alpha: 0.5),
+                        ),
+                      ),
+                    )
               else
                 Flexible(
                   child: ListView.separated(

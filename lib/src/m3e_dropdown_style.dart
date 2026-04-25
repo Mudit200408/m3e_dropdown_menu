@@ -85,7 +85,7 @@ class M3EDropdownFieldStyle with Diagnosticable {
 
   /// Border radius of the field.
   ///
-  /// When null the widget's `outerRadius` inside [M3EDropdownItemDecoration] is used as a circular radius.
+  /// When null the widget's `outerRadius` inside [M3EDropdownItemStyle] is used as a circular radius.
   final BorderRadius? borderRadius;
 
   /// Whether to show a clear-all icon when items are selected.
@@ -222,8 +222,11 @@ class M3EDropdownFieldStyle with Diagnosticable {
     return M3EDropdownFieldStyle(
       hintText: t < 0.5 ? a?.hintText : b?.hintText,
       hintStyle: TextStyle.lerp(a?.hintStyle, b?.hintStyle, t),
-      selectedTextStyle:
-          TextStyle.lerp(a?.selectedTextStyle, b?.selectedTextStyle, t),
+      selectedTextStyle: TextStyle.lerp(
+        a?.selectedTextStyle,
+        b?.selectedTextStyle,
+        t,
+      ),
       errorStyle: TextStyle.lerp(a?.errorStyle, b?.errorStyle, t),
       prefixIcon: t < 0.5 ? a?.prefixIcon : b?.prefixIcon,
       suffixIcon: t < 0.5 ? a?.suffixIcon : b?.suffixIcon,
@@ -250,13 +253,17 @@ class M3EDropdownFieldStyle with Diagnosticable {
       showArrow: t < 0.5 ? (a?.showArrow ?? true) : (b?.showArrow ?? true),
       loadingWidget: t < 0.5 ? a?.loadingWidget : b?.loadingWidget,
       borderRadius: BorderRadius.lerp(a?.borderRadius, b?.borderRadius, t),
-      showClearIcon:
-          t < 0.5 ? (a?.showClearIcon ?? false) : (b?.showClearIcon ?? false),
+      showClearIcon: t < 0.5
+          ? (a?.showClearIcon ?? false)
+          : (b?.showClearIcon ?? false),
       animateSuffixIcon: t < 0.5
           ? (a?.animateSuffixIcon ?? true)
           : (b?.animateSuffixIcon ?? true),
-      selectedBorderRadius:
-          lerpDouble(a?.selectedBorderRadius, b?.selectedBorderRadius, t),
+      selectedBorderRadius: lerpDouble(
+        a?.selectedBorderRadius,
+        b?.selectedBorderRadius,
+        t,
+      ),
       hoverRadius: lerpDouble(a?.hoverRadius, b?.hoverRadius, t),
       pressedRadius: lerpDouble(a?.pressedRadius, b?.pressedRadius, t),
       splashFactory: t < 0.5 ? a?.splashFactory : b?.splashFactory,
@@ -299,33 +306,33 @@ class M3EDropdownFieldStyle with Diagnosticable {
 
   @override
   int get hashCode => Object.hashAll([
-        hintText,
-        hintStyle,
-        selectedTextStyle,
-        errorStyle,
-        prefixIcon,
-        suffixIcon,
-        clearIcon,
-        backgroundColor,
-        foregroundColor,
-        padding,
-        margin,
-        border,
-        focusedBorder,
-        errorBorder,
-        showArrow,
-        loadingWidget,
-        borderRadius,
-        showClearIcon,
-        animateSuffixIcon,
-        selectedBorderRadius,
-        hoverRadius,
-        pressedRadius,
-        splashFactory,
-        splashColor,
-        highlightColor,
-        mouseCursor,
-      ]);
+    hintText,
+    hintStyle,
+    selectedTextStyle,
+    errorStyle,
+    prefixIcon,
+    suffixIcon,
+    clearIcon,
+    backgroundColor,
+    foregroundColor,
+    padding,
+    margin,
+    border,
+    focusedBorder,
+    errorBorder,
+    showArrow,
+    loadingWidget,
+    borderRadius,
+    showClearIcon,
+    animateSuffixIcon,
+    selectedBorderRadius,
+    hoverRadius,
+    pressedRadius,
+    splashFactory,
+    splashColor,
+    highlightColor,
+    mouseCursor,
+  ]);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -338,8 +345,12 @@ class M3EDropdownFieldStyle with Diagnosticable {
     properties.add(DiagnosticsProperty<TextStyle>('errorStyle', errorStyle));
     properties.add(ColorProperty('backgroundColor', backgroundColor));
     properties.add(ColorProperty('foregroundColor', foregroundColor));
-    properties.add(DiagnosticsProperty<BorderRadius>('borderRadius', borderRadius));
-    properties.add(DoubleProperty('selectedBorderRadius', selectedBorderRadius));
+    properties.add(
+      DiagnosticsProperty<BorderRadius>('borderRadius', borderRadius),
+    );
+    properties.add(
+      DoubleProperty('selectedBorderRadius', selectedBorderRadius),
+    );
   }
 }
 
@@ -443,9 +454,10 @@ class M3EDropdownStyle with Diagnosticable {
       footer: t < 0.5 ? a?.footer : b?.footer,
       contentPadding:
           EdgeInsetsGeometry.lerp(a?.contentPadding, b?.contentPadding, t) ??
-              const EdgeInsets.all(8),
-      expandDirection:
-          t < 0.5 ? (a?.expandDirection ?? ExpandDirection.auto) : (b?.expandDirection ?? ExpandDirection.auto),
+          const EdgeInsets.all(8),
+      expandDirection: t < 0.5
+          ? (a?.expandDirection ?? ExpandDirection.auto)
+          : (b?.expandDirection ?? ExpandDirection.auto),
       containerRadius: lerpDouble(a?.containerRadius, b?.containerRadius, t),
     );
   }
@@ -467,17 +479,17 @@ class M3EDropdownStyle with Diagnosticable {
 
   @override
   int get hashCode => Object.hash(
-        backgroundColor,
-        elevation,
-        maxHeight,
-        marginTop,
-        noItemsFoundText,
-        header,
-        footer,
-        contentPadding,
-        expandDirection,
-        containerRadius,
-      );
+    backgroundColor,
+    elevation,
+    maxHeight,
+    marginTop,
+    noItemsFoundText,
+    header,
+    footer,
+    contentPadding,
+    expandDirection,
+    containerRadius,
+  );
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -486,8 +498,12 @@ class M3EDropdownStyle with Diagnosticable {
     properties.add(DoubleProperty('elevation', elevation));
     properties.add(DoubleProperty('maxHeight', maxHeight));
     properties.add(DoubleProperty('marginTop', marginTop));
-    properties.add(DiagnosticsProperty<EdgeInsetsGeometry>('contentPadding', contentPadding));
-    properties.add(EnumProperty<ExpandDirection>('expandDirection', expandDirection));
+    properties.add(
+      DiagnosticsProperty<EdgeInsetsGeometry>('contentPadding', contentPadding),
+    );
+    properties.add(
+      EnumProperty<ExpandDirection>('expandDirection', expandDirection),
+    );
     properties.add(DoubleProperty('containerRadius', containerRadius));
   }
 }
@@ -589,24 +605,22 @@ class M3EChipStyle with Diagnosticable {
   }
 
   /// Linearly interpolate between two chip styles.
-  static M3EChipStyle lerp(
-    M3EChipStyle? a,
-    M3EChipStyle? b,
-    double t,
-  ) {
+  static M3EChipStyle lerp(M3EChipStyle? a, M3EChipStyle? b, double t) {
     if (a == null && b == null) return const M3EChipStyle();
     return M3EChipStyle(
       backgroundColor: Color.lerp(a?.backgroundColor, b?.backgroundColor, t),
       labelStyle: TextStyle.lerp(a?.labelStyle, b?.labelStyle, t),
       deleteIcon: t < 0.5 ? a?.deleteIcon : b?.deleteIcon,
-      padding: EdgeInsetsGeometry.lerp(a?.padding, b?.padding, t) ??
+      padding:
+          EdgeInsetsGeometry.lerp(a?.padding, b?.padding, t) ??
           const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       border: BorderSide.lerp(
         a?.border ?? BorderSide.none,
         b?.border ?? BorderSide.none,
         t,
       ),
-      borderRadius: BorderRadius.lerp(a?.borderRadius, b?.borderRadius, t) ??
+      borderRadius:
+          BorderRadius.lerp(a?.borderRadius, b?.borderRadius, t) ??
           const BorderRadius.all(Radius.circular(20)),
       spacing: lerpDouble(a?.spacing, b?.spacing, t) ?? 6,
       runSpacing: lerpDouble(a?.runSpacing, b?.runSpacing, t) ?? 6,
@@ -642,20 +656,20 @@ class M3EChipStyle with Diagnosticable {
 
   @override
   int get hashCode => Object.hash(
-        backgroundColor,
-        labelStyle,
-        deleteIcon,
-        padding,
-        border,
-        borderRadius,
-        spacing,
-        runSpacing,
-        wrap,
-        maxDisplayCount,
-        openMotion,
-        closeMotion,
-        mouseCursor,
-      );
+    backgroundColor,
+    labelStyle,
+    deleteIcon,
+    padding,
+    border,
+    borderRadius,
+    spacing,
+    runSpacing,
+    wrap,
+    maxDisplayCount,
+    openMotion,
+    closeMotion,
+    mouseCursor,
+  );
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -663,7 +677,9 @@ class M3EChipStyle with Diagnosticable {
     properties.add(ColorProperty('backgroundColor', backgroundColor));
     properties.add(DiagnosticsProperty<TextStyle>('labelStyle', labelStyle));
     properties.add(DiagnosticsProperty<EdgeInsetsGeometry>('padding', padding));
-    properties.add(DiagnosticsProperty<BorderRadius>('borderRadius', borderRadius));
+    properties.add(
+      DiagnosticsProperty<BorderRadius>('borderRadius', borderRadius),
+    );
     properties.add(DoubleProperty('spacing', spacing));
     properties.add(IntProperty('maxDisplayCount', maxDisplayCount));
   }
@@ -705,7 +721,7 @@ class M3ESearchStyle with Diagnosticable {
 
   /// Border radius of the search field.
   ///
-  /// When null, falls back to the item decoration's outer radius.
+  /// When null, falls back to the item style's outer radius.
   final BorderRadius? borderRadius;
 
   /// Content padding inside the search text field.
@@ -775,23 +791,23 @@ class M3ESearchStyle with Diagnosticable {
   }
 
   /// Linearly interpolate between two search styles.
-  static M3ESearchStyle lerp(
-    M3ESearchStyle? a,
-    M3ESearchStyle? b,
-    double t,
-  ) {
+  static M3ESearchStyle lerp(M3ESearchStyle? a, M3ESearchStyle? b, double t) {
     if (a == null && b == null) return const M3ESearchStyle();
     return M3ESearchStyle(
-      hintText: t < 0.5 ? (a?.hintText ?? 'Search…') : (b?.hintText ?? 'Search…'),
+      hintText: t < 0.5
+          ? (a?.hintText ?? 'Search…')
+          : (b?.hintText ?? 'Search…'),
       hintStyle: TextStyle.lerp(a?.hintStyle, b?.hintStyle, t),
       textStyle: TextStyle.lerp(a?.textStyle, b?.textStyle, t),
       fillColor: Color.lerp(a?.fillColor, b?.fillColor, t),
       filled: t < 0.5 ? (a?.filled ?? false) : (b?.filled ?? false),
       autofocus: t < 0.5 ? (a?.autofocus ?? false) : (b?.autofocus ?? false),
-      showClearIcon:
-          t < 0.5 ? (a?.showClearIcon ?? true) : (b?.showClearIcon ?? true),
+      showClearIcon: t < 0.5
+          ? (a?.showClearIcon ?? true)
+          : (b?.showClearIcon ?? true),
       clearIcon: t < 0.5 ? a?.clearIcon : b?.clearIcon,
-      searchDebounceMs: lerpDouble(
+      searchDebounceMs:
+          lerpDouble(
             a?.searchDebounceMs.toDouble(),
             b?.searchDebounceMs.toDouble(),
             t,
@@ -800,8 +816,9 @@ class M3ESearchStyle with Diagnosticable {
       borderRadius: BorderRadius.lerp(a?.borderRadius, b?.borderRadius, t),
       contentPadding:
           EdgeInsetsGeometry.lerp(a?.contentPadding, b?.contentPadding, t) ??
-              const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      margin: EdgeInsetsGeometry.lerp(a?.margin, b?.margin, t) ??
+          const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      margin:
+          EdgeInsetsGeometry.lerp(a?.margin, b?.margin, t) ??
           const EdgeInsets.fromLTRB(12, 8, 12, 4),
       mouseCursor: t < 0.5 ? a?.mouseCursor : b?.mouseCursor,
     );
@@ -827,27 +844,29 @@ class M3ESearchStyle with Diagnosticable {
 
   @override
   int get hashCode => Object.hash(
-        hintText,
-        hintStyle,
-        textStyle,
-        fillColor,
-        filled,
-        autofocus,
-        showClearIcon,
-        clearIcon,
-        searchDebounceMs,
-        borderRadius,
-        contentPadding,
-        margin,
-        mouseCursor,
-      );
+    hintText,
+    hintStyle,
+    textStyle,
+    fillColor,
+    filled,
+    autofocus,
+    showClearIcon,
+    clearIcon,
+    searchDebounceMs,
+    borderRadius,
+    contentPadding,
+    margin,
+    mouseCursor,
+  );
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(StringProperty('hintText', hintText));
     properties.add(ColorProperty('fillColor', fillColor));
-    properties.add(DiagnosticsProperty<BorderRadius>('borderRadius', borderRadius));
+    properties.add(
+      DiagnosticsProperty<BorderRadius>('borderRadius', borderRadius),
+    );
   }
 }
 
@@ -941,12 +960,12 @@ class M3EDropdownItemStyle with Diagnosticable {
     this.selectedTextStyle,
     this.selectedIcon,
     this.outerRadius,
-    this.innerRadius = 10.0,
+    this.innerRadius = 6.0,
     this.itemGap,
     this.itemPadding = const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
     this.selectedBorderRadius,
-    this.hoverRadius = 12.0,
-    this.pressedRadius = 6.0,
+    this.hoverRadius = 8.0,
+    this.pressedRadius = 4.0,
     this.splashFactory,
     this.splashColor,
     this.highlightColor,
@@ -1022,19 +1041,34 @@ class M3EDropdownItemStyle with Diagnosticable {
         t,
       ),
       textColor: Color.lerp(a?.textColor, b?.textColor, t),
-      selectedTextColor: Color.lerp(a?.selectedTextColor, b?.selectedTextColor, t),
-      disabledTextColor: Color.lerp(a?.disabledTextColor, b?.disabledTextColor, t),
+      selectedTextColor: Color.lerp(
+        a?.selectedTextColor,
+        b?.selectedTextColor,
+        t,
+      ),
+      disabledTextColor: Color.lerp(
+        a?.disabledTextColor,
+        b?.disabledTextColor,
+        t,
+      ),
       textStyle: TextStyle.lerp(a?.textStyle, b?.textStyle, t),
-      selectedTextStyle:
-          TextStyle.lerp(a?.selectedTextStyle, b?.selectedTextStyle, t),
+      selectedTextStyle: TextStyle.lerp(
+        a?.selectedTextStyle,
+        b?.selectedTextStyle,
+        t,
+      ),
       selectedIcon: t < 0.5 ? a?.selectedIcon : b?.selectedIcon,
       outerRadius: lerpDouble(a?.outerRadius, b?.outerRadius, t),
       innerRadius: lerpDouble(a?.innerRadius, b?.innerRadius, t) ?? 6.0,
       itemGap: lerpDouble(a?.itemGap, b?.itemGap, t),
-      itemPadding: EdgeInsetsGeometry.lerp(a?.itemPadding, b?.itemPadding, t) ??
+      itemPadding:
+          EdgeInsetsGeometry.lerp(a?.itemPadding, b?.itemPadding, t) ??
           const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      selectedBorderRadius:
-          lerpDouble(a?.selectedBorderRadius, b?.selectedBorderRadius, t),
+      selectedBorderRadius: lerpDouble(
+        a?.selectedBorderRadius,
+        b?.selectedBorderRadius,
+        t,
+      ),
       hoverRadius: lerpDouble(a?.hoverRadius, b?.hoverRadius, t) ?? 8.0,
       pressedRadius: lerpDouble(a?.pressedRadius, b?.pressedRadius, t) ?? 4.0,
       splashFactory: t < 0.5 ? a?.splashFactory : b?.splashFactory,
@@ -1071,35 +1105,39 @@ class M3EDropdownItemStyle with Diagnosticable {
 
   @override
   int get hashCode => Object.hashAll([
-        backgroundColor,
-        selectedBackgroundColor,
-        disabledBackgroundColor,
-        textColor,
-        selectedTextColor,
-        disabledTextColor,
-        textStyle,
-        selectedTextStyle,
-        selectedIcon,
-        outerRadius,
-        innerRadius,
-        itemGap,
-        itemPadding,
-        selectedBorderRadius,
-        hoverRadius,
-        pressedRadius,
-        splashFactory,
-        splashColor,
-        highlightColor,
-        mouseCursor,
-      ]);
+    backgroundColor,
+    selectedBackgroundColor,
+    disabledBackgroundColor,
+    textColor,
+    selectedTextColor,
+    disabledTextColor,
+    textStyle,
+    selectedTextStyle,
+    selectedIcon,
+    outerRadius,
+    innerRadius,
+    itemGap,
+    itemPadding,
+    selectedBorderRadius,
+    hoverRadius,
+    pressedRadius,
+    splashFactory,
+    splashColor,
+    highlightColor,
+    mouseCursor,
+  ]);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(ColorProperty('backgroundColor', backgroundColor));
-    properties.add(ColorProperty('selectedBackgroundColor', selectedBackgroundColor));
+    properties.add(
+      ColorProperty('selectedBackgroundColor', selectedBackgroundColor),
+    );
     properties.add(DoubleProperty('outerRadius', outerRadius));
     properties.add(DoubleProperty('innerRadius', innerRadius));
-    properties.add(DiagnosticsProperty<EdgeInsetsGeometry>('itemPadding', itemPadding));
+    properties.add(
+      DiagnosticsProperty<EdgeInsetsGeometry>('itemPadding', itemPadding),
+    );
   }
 }

@@ -2,19 +2,23 @@
 
 ![M3E Intro](https://raw.githubusercontent.com/Mudit200408/m3e_dropdown_menu/main/doc/intro.png)
 
-A comprehensive Flutter package providing an expressive, Material 3 dropdown menu with spring physics and extensive customization options. It offers single and multi-selection, fuzzy search, async loading, and animated chip tags—all featuring expressive M3 styling and neighbour animations.
+A comprehensive Flutter package providing an expressive, Material 3 dropdown menu with high-performance spring physics, interactive radius morphing, and extensive customization options. Featuring single and multi-selection, fuzzy search, async loading, and animated chip tags—all designed with premium M3 Expressive principles.
 
-It automatically calculates and draws the corners to fit exactly the [Material 3 Expressive](https://m3.material.io/blog/building-with-m3-expressive) spec for interactive elements. It provides deep control over styling, custom haptic feedback, and highly tunable spring stiffness and damping for animations.
+It automatically calculates and draws corners to fit exactly the [Material 3 Expressive](https://m3.material.io/blog/building-with-m3-expressive) spec. It provides deep control over styling, custom haptic feedback, and highly tunable spring motions.
 
 ---
 
 ## 🚀 Features
 
-- **Dynamic border radius:** Fluid transitions between field states with animated borders.
+- **Interactive Radius Morphing:** Snappy, high-fidelity `BorderRadius` morphing on hover and press for both field and items.
+- **Dual-Speed Animations:** Fine-tuned durations (20ms for selection, 40ms for interactions) for an incredibly responsive feel.
+- **Premium Interaction Model:** Subtle opacity-based overlay fades that complement structural motion better than standard ripples.
+- **Form Integration:** Full support for `FormField` validation with customizable error borders and text styles.
+- **Standardized Styling:** All style classes support `copyWith`, `lerp`, and equality operators for easy theme integration.
+- **Dynamic Border Radius:** Fluid transitions between field states with animated borders.
 - **Rich Interaction:** Spring-driven physics for expanding and collapsing the dropdown menu.
 - **Chips & Search:** Built-in multi-selection chip support and fuzzy search input.
-- **Form Integration:** Fully compatible with Flutter's standard `Form` and validation APIs.
-- **Highly Customizable:** Complete control over haptics, splash ripples, border colors, radii, padding, and animations.
+- **Highly Customizable:** Complete control over haptics, motion presets, overlay colors, and per-component styling.
 
 ---
 
@@ -32,14 +36,11 @@ import 'package:m3e_dropdown_menu/m3e_dropdown_menu.dart';
 ---
 ## 🧩 Usage
 
-### 🔴 M3E Dropdown (With expandedBorderRadius)
-<img src="https://raw.githubusercontent.com/Mudit200408/m3e_dropdown_menu/main/doc/dropdown-normal.gif"  height="450" alt="M3E Dropdown"/>
+### 🚀 Want to try out the package?
+**[Check out the Live Demo here!](https://mudit200408.github.io/m3e_core/)**
 
-### 🔴 M3E Dropdown (Without expandedBorderRadius, With Chips)
-<img src="https://raw.githubusercontent.com/Mudit200408/m3e_dropdown_menu/main/doc/dropdown-chip.gif"  height="450" alt="M3E Dropdown"/>
-
-### Single-select
-A basic dropdown selecting one item, with an animated border radius transition.
+### Single-select with Radius Morphing
+A basic dropdown selecting one item, featuring interactive radius morphing for a tactile feel.
 ```dart
 M3EDropdownMenu<String>(
   items: [
@@ -48,110 +49,64 @@ M3EDropdownMenu<String>(
     M3EDropdownItem(label: 'Cherry', value: 'cherry'),
   ],
   singleSelect: true,
-  openMotion: M3EMotion.custom(stiffness: 400, damping: 0.6),
-  fieldDecoration: M3EDropdownFieldDecoration(
+  openMotion: M3EMotion.standardSpatialDefault,
+  fieldStyle: M3EDropdownFieldStyle(
     hintText: 'Choose a fruit',
     borderRadius: BorderRadius.circular(12),
-    expandedBorderRadius: BorderRadius.circular(28),
+    selectedBorderRadius: 28,
+    hoverRadius: 16,
+    pressedRadius: 8,
   ),
-  dropdownDecoration: const M3EDropdownDecoration(containerRadius: 18),
-  itemDecoration: const M3EDropdownItemDecoration(outerRadius: 18, innerRadius: 6),
+  dropdownStyle: const M3EDropdownStyle(containerRadius: 18),
+  itemStyle: const M3EDropdownItemStyle(
+    outerRadius: 18,
+    innerRadius: 6,
+    hoverRadius: 8,
+    pressedRadius: 4,
+  ),
   onSelectionChanged: (items) => print(items),
 )
 ```
 
-### Multi-select + Search + Chips + Clear
-Provides a search bar, animated chip display, and a clear-all icon.
+### Multi-select + Search + Chips + Custom Motion
+Provides a search bar, animated chip display, and custom spring physics.
 ```dart
 M3EDropdownMenu<String>(
   items: fruitItems,
   searchEnabled: true,
   showChipAnimation: true,
   maxSelections: 7,
-  fieldDecoration: M3EDropdownFieldDecoration(
+  openMotion: M3EMotion.custom(stiffness: 500, damping: 0.6),
+  fieldStyle: M3EDropdownFieldStyle(
     hintText: 'Pick up to 7 fruits',
     border: BorderSide(color: Theme.of(context).colorScheme.outline),
     showClearIcon: true,
   ),
-  chipDecoration: M3EChipDecoration(
+  chipStyle: M3EChipStyle(
     maxDisplayCount: 3,
     borderRadius: BorderRadius.circular(33),
-    openMotion: M3EMotion.custom(stiffness: 600, damping: 0.7),
-    closeMotion: M3EMotion.custom(stiffness: 700, damping: 0.4),
+    openMotion: M3EMotion.expressiveSpatialFast,
+    closeMotion: M3EMotion.expressiveSpatialDefault,
   ),
-  searchDecoration: M3ESearchDecoration(
+  searchStyle: M3ESearchStyle(
     hintText: 'Search fruits…',
     filled: true,
     borderRadius: BorderRadius.circular(24),
   ),
-  itemDecoration: M3EDropdownItemDecoration(
-    outerRadius: 24,
-    innerRadius: 8,
-    selectedIcon: Icon(Icons.check_rounded, color: Theme.of(context).colorScheme.primary, size: 18),
-  ),
   onSelectionChanged: (items) => print(items),
 )
 ```
 
-### With Form Validation
-Integrates seamlessly with Flutter's standard `Form` and validations.
-```dart
-Form(
-  child: Column(
-    children: [
-      M3EDropdownMenu<String>(
-        items: fruitItems,
-        singleSelect: true,
-        validator: (selected) {
-          if (selected == null || selected.isEmpty) return 'Required';
-          return null;
-        },
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        fieldDecoration: M3EDropdownFieldDecoration(
-          hintText: 'Required fruit',
-          borderRadius: BorderRadius.circular(12),
-          expandedBorderRadius: BorderRadius.circular(28),
-        ),
-        dropdownDecoration: const M3EDropdownDecoration(
-          containerRadius: 24,
-          header: Text("Pick a fruit"),
-          footer: Text("Swipe to see more"),
-        ),
-        itemDecoration: const M3EDropdownItemDecoration(
-          outerRadius: 24,
-          selectedBorderRadius: 24,
-          itemPadding: EdgeInsets.all(14),
-        ),
-        onSelectionChanged: (items) => print(items),
-      ),
-      ElevatedButton(
-        onPressed: () => formKey.currentState!.validate(),
-        child: const Text('Submit'),
-      ),
-    ],
-  ),
-)
-```
-
-### Custom Selected Item Builder
-Build custom chip-like representations for selected items.
+### Form Validation Styling
+Easily style validation errors with custom borders and text styles.
 ```dart
 M3EDropdownMenu<String>(
   items: fruitItems,
-  showChipAnimation: true,
-  haptic: M3EHapticFeedback.light,
-  selectedItemBuilder: (item) {
-    return Chip(
-      avatar: Icon(Icons.check_circle, color: Theme.of(context).colorScheme.primary, size: 18),
-      label: Text(item.label),
-      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-    );
-  },
-  chipDecoration: M3EChipDecoration(
-    openMotion: M3EMotion.custom(stiffness: 600, damping: 0.7),
-    closeMotion: M3EMotion.custom(stiffness: 700, damping: 0.4),
+  validator: (val) => val == null || val.isEmpty ? 'Required field' : null,
+  fieldStyle: M3EDropdownFieldStyle(
+    errorBorder: const BorderSide(color: Colors.red, width: 2),
+    errorStyle: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
   ),
-  onSelectionChanged: (items) => print(items),
 )
 ```
 
@@ -167,14 +122,18 @@ M3EDropdownMenu<int>.future(
     );
   },
   singleSelect: true,
-  fieldDecoration: const M3EDropdownFieldDecoration(
+  fieldStyle: const M3EDropdownFieldStyle(
     hintText: 'Loading users…',
   ),
   onSelectionChanged: (items) => print(items),
 )
 ```
 
-**Constructor Parameters:**
+---
+
+## 🛠 API Reference
+
+**`M3EDropdownMenu` Parameters:**
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
 | `items` | `List<M3EDropdownItem<T>>` | **Required** | List of dropdown items. |
@@ -188,100 +147,44 @@ M3EDropdownMenu<int>.future(
 | `controller` | `M3EDropdownController<T>?` | `null` | Optional programmatic controller. |
 | `enabled` | `bool` | `true` | Whether the dropdown is enabled. |
 | `containerRadius` | `double` | `28.0` | Radius for the dropdown panel and field (when no field radius is set). |
-| `fieldStyle` | `M3EDropdownFieldStyle` | `const` | Stylize the field placeholder, background, hint text, and icons. |
+| `fieldStyle` | `M3EDropdownFieldStyle` | `const` | Stylize the field placeholder, radii, and interactions. |
 | `dropdownStyle` | `M3EDropdownStyle` | `const` | Stylize the overlay panel height, colors, and shadow. |
-| `chipStyle` | `M3EChipStyle` | `const` | Stylize the chips, spacing, and pop animations. |
+| `chipStyle` | `M3EChipStyle` | `const` | Stylize the chips, spacing, and animations. |
 | `searchStyle` | `M3ESearchStyle` | `const` | Stylize the search field inside the dropdown. |
-| `itemStyle` | `M3EDropdownItemStyle` | `const` | Stylize individual dropdown items. |
+| `itemStyle` | `M3EDropdownItemStyle` | `const` | Stylize individual dropdown items and their morphing. |
+| `openMotion` | `M3EMotion` | `expressiveSpatialDefault` | Spring physics for expansion/selection transitions. |
+| `closeMotion` | `M3EMotion` | `expressiveSpatialDefault` | Spring physics for collapse transitions. |
+| `haptic` | `M3EHapticFeedback` | `none` | Haptic feedback intensity on tap. |
 | `itemBuilder` | `M3EDropdownItemBuilder<T>?` | `null` | Custom builder for each dropdown item. |
+| `emptyBuilder` | `WidgetBuilder?` | `null` | Custom builder for the empty state when no items are found. |
 | `selectedItemBuilder` | `Widget Function(M3EDropdownItem<T>)?` | `null` | Custom builder for selected items in the field. |
-| `itemSeparator` | `Widget?` | `null` | Widget placed between dropdown items. |
-| `validator` | `String? Function(List?)?` | `null` | Form validation callback. |
-| `autovalidateMode` | `AutovalidateMode` | `disabled` | Autovalidate mode for form integration. |
-| `focusNode` | `FocusNode?` | `null` | Focus node for the dropdown field. |
-| `closeOnBackButton` | `bool` | `false` | Close the dropdown on system back button press. |
-| `openMotion` | `M3EMotion` | `expressiveSpatialDefault` | Spring motion for expand animation. |
-| `closeMotion` | `M3EMotion` | `expressiveSpatialDefault` | Spring motion for collapse animation. |
-| `splashFactory` | `InteractiveInkFeatureFactory?` | `NoSplash.splashFactory` | Splash factory for tap feedback. |
-| `haptic` | `M3EHapticFeedback` | `none` | Haptic feedback level on tap (`none`, `light`, `medium`, `heavy`). |
 
 **`M3EDropdownFieldStyle` Parameters:**
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `hintText` / `hintStyle` | `String?` / `TextStyle?` | - | Placeholder text and its style. |
-| `selectedTextStyle` | `TextStyle?` | - | Style for the selected value text (single-select). |
-| `prefixIcon` / `suffixIcon` | `Widget?` | - | Optional leading/trailing widgets. |
-| `backgroundColor` / `foregroundColor` | `Color?` | - | Colors for the field. |
-| `padding` / `margin` | `EdgeInsetsGeometry` | - | Inner content padding and outer margin. |
-| `border` / `focusedBorder` | `BorderSide?` | - | Resting and focused borders. |
-| `borderRadius` / `selectedBorderRadius` | `BorderRadius?` / `double?` | - | Resting radius, and radius when expanded/selected. |
-| `hoverRadius` / `pressedRadius` | `double?` | - | Radii used for interactive morphing on hover/press. |
+| `borderRadius` | `BorderRadius?` | - | Resting radius of the field. |
+| `selectedBorderRadius` | `double?` | - | Radius when the dropdown is expanded. |
+| `hoverRadius` | `double?` | - | Radius used when the field is hovered. |
+| `pressedRadius` | `double?` | - | Radius used when the field is pressed. |
+| `splashFactory` | `InteractiveInkFeatureFactory?` | `NoSplash` | Type of splash effect for tap feedback. |
+| `errorBorder` | `BorderSide?` | - | Border used when validation fails. |
+| `errorStyle` | `TextStyle?` | - | Style for the validation error text. |
+| `mouseCursor` | `MouseCursor?` | `SystemMouseCursors.click` | Cursor used when hovering. |
 | `showArrow` | `bool` | `true` | Shows default animated chevron. |
 | `showClearIcon` | `bool` | `false` | Shows clear-all icon when selections exist. |
-| `animateSuffixIcon` | `bool` | `true` | Rotates suffix icon when expanded. |
-| `loadingWidget` | `Widget?` | `CircularProgressIndicator` | Widget shown while async loading. |
-
-**`M3EDropdownStyle` Parameters:**
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `backgroundColor` | `Color?` | - | Background color of the dropdown panel. |
-| `elevation` | `double` | `3` | Dropdown panel elevation. |
-| `maxHeight` | `double` | `350` | Maximum height bounds for the panel. |
-| `marginTop` | `double` | `4` | Gap between the field and panel. |
-| `expandDirection` | `ExpandDirection` | `auto` | Extends `up`, `down`, or `auto` based on screen space. |
-| `containerRadius` | `double?` | - | Overrides the menu's `containerRadius`. |
-| `contentPadding` | `EdgeInsetsGeometry` | `EdgeInsets.all(8)` | Inner padding for the list items. |
-| `noItemsFoundText` | `String` | `'No items found'` | Text when search yields nothing. |
-| `header` / `footer` | `Widget?` | - | Widgets placed above/below the items inside the panel. |
-
-**`M3EChipStyle` Parameters:**
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `backgroundColor` | `Color?` | - | Chip background color. |
-| `labelStyle` | `TextStyle?` | - | Text style for the chip. |
-| `deleteIcon` | `Widget?` | - | Custom widget for deletion icon. |
-| `padding` | `EdgeInsetsGeometry` | - | Inner chip padding. |
-| `border` / `borderRadius` | `BorderSide?` / `BorderRadius` | - | Borders and radii (`Radius.circular(20)`). |
-| `wrap` | `bool` | `true` | Wraps chips instead of horizontal scroll. |
-| `spacing` /| `runSpacing` | `double` | `6` | Horizontal & vertical distance between chips. |
-| `maxDisplayCount` | `int?` | - | Shows "+N more" if exceeding max count. |
-| `openMotion` | `M3EMotion` | `expressiveSpatialDefault` | Spring motion for entry (scale-in). |
-| `closeMotion` | `M3EMotion` | `expressiveSpatialDefault` | Spring motion for exit (scale-out). |
-
-**`M3ESearchStyle` Parameters:**
-| Parameter | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `hintText` | `String` | `'Search…'` | Hint text shown in the search field. |
-| `hintStyle` | `TextStyle?` | - | Search field hint style. |
-| `textStyle` | `TextStyle?` | - | Search field text style. |
-| `fillColor` | `Color?` | - | Fill color for the search field. |
-| `filled` | `bool` | `false` | Whether the search field is filled. |
-| `autofocus` | `bool` | `false` | Auto-focus the search field when the dropdown opens. |
-| `showClearIcon` | `bool` | `true` | Whether to show a clear-search icon. |
-| `clearIcon` | `Widget?` | - | Custom clear icon widget. |
-| `searchDebounceMs` | `int` | `0` | Debounce duration in ms (0 = no debounce). |
-| `borderRadius` | `BorderRadius?` | - | Border radius of the search field. |
-| `contentPadding` | `EdgeInsetsGeometry` | `EdgeInsets.symmetric(horizontal: 12, vertical: 8)` | Content padding inside the search field. |
-| `margin` | `EdgeInsetsGeometry` | `EdgeInsets.fromLTRB(12, 8, 12, 4)` | Outer margin around the search field. |
+| `clearIcon` | `Widget?` | - | Custom widget for the clear-all icon. |
 
 **`M3EDropdownItemStyle` Parameters:**
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `backgroundColor` | `Color?` | - | Item background color. |
-| `selectedBackgroundColor` | `Color?` | - | Background color for selected items. |
-| `disabledBackgroundColor` | `Color?` | - | Background color for disabled items. |
-| `textColor` | `Color?` | - | Item text color. |
-| `selectedTextColor` | `Color?` | - | Text color for selected items. |
-| `disabledTextColor` | `Color?` | - | Text color for disabled items. |
-| `textStyle` | `TextStyle?` | - | Text style for item labels. |
-| `selectedTextStyle` | `TextStyle?` | - | Text style for selected item labels. |
-| `selectedIcon` | `Widget?` | `Icons.check_rounded` | Icon shown next to selected items. |
-| `outerRadius` | `double?` | `12.0` | Outer radius for first/last dropdown item cards. |
-| `innerRadius` | `double?` | `4.0` | Inner radius for middle dropdown item cards. |
-| `hoverRadius` / `pressedRadius` | `double?` | - | Radii used for interactive morphing on hover/press. |
-| `itemGap` | `double?` | `3.0` | Gap between items. |
-| `itemPadding` | `EdgeInsetsGeometry` | `EdgeInsets.symmetric(horizontal: 16, vertical: 12)` | Inner padding for each dropdown item. |
-| `selectedBorderRadius` | `double?` | `outerRadius` | Border radius applied to a selected item. |
+| `outerRadius` | `double?` | `12.0` | Radius for the "cap" corners of the first/last items. |
+| `innerRadius` | `double` | `6.0` | Base radius for internal item corners. |
+| `hoverRadius` | `double` | `8.0` | Radius used when an item is hovered. |
+| `pressedRadius` | `double` | `4.0` | Radius used when an item is pressed. |
+| `selectedBorderRadius` | `double?` | - | Radius used when an item is selected. |
+| `mouseCursor` | `MouseCursor?` | - | Cursor used when hovering over an item. |
+| `backgroundColor` / `textColor` | `Color?` | - | Colors for the items. |
+| `selectedBackgroundColor` / `selectedTextColor` | `Color?` | - | Colors for items when selected. |
 
 ---
 
@@ -297,7 +200,6 @@ Hope You Love It!
 ----
 ## Credits
 - [Motor](https://pub.dev/packages/motor) Pub Package for Expressive Animations
-- [Multi_dropdown](https://pub.dev/packages/multi_dropdown) Pub Package for Dropdown Menu
 - Claude and Gemini for helping me with the code and documentation.
 
 ### Radhe Radhe 🙏
