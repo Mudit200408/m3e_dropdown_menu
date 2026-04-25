@@ -142,6 +142,11 @@ class _DropdownM3EScreenState extends State<DropdownM3EScreen> {
                   borderRadius: const BorderRadius.all(Radius.circular(12)),
                   selectedBorderRadius: 28,
                   padding: const EdgeInsets.all(12),
+                  errorBorder: const BorderSide(color: Colors.red, width: 2),
+                  errorStyle: const TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 itemStyle: const M3EDropdownItemStyle(
                   outerRadius: 24,

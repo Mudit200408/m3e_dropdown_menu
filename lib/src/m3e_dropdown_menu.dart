@@ -276,6 +276,9 @@ class _M3EDropdownMenuState<T> extends State<M3EDropdownMenu<T>>
   // Focus
   late FocusNode _focusNode;
 
+  // Animation direction tracking
+  bool? _openingShowOnTop;
+
   // Search
   final TextEditingController _searchTextController = TextEditingController();
   Timer? _searchDebounce;
@@ -475,6 +478,7 @@ class _M3EDropdownMenuState<T> extends State<M3EDropdownMenu<T>>
       if (_portalController.isShowing) {
         _portalController.hide();
       }
+      _openingShowOnTop = null;
     }
   }
 
@@ -487,6 +491,31 @@ class _M3EDropdownMenuState<T> extends State<M3EDropdownMenu<T>>
     if (!_controller.isOpen) {
       _controller.setOpen(true);
     }
+
+    // Determine direction before opening
+    final renderBox = context.findRenderObject() as RenderBox?;
+    if (renderBox != null && renderBox.attached) {
+      final renderBoxSize = renderBox.size;
+      final renderBoxOffset = renderBox.localToGlobal(Offset.zero);
+      final screenHeight = MediaQuery.of(context).size.height;
+      final spaceBelow =
+          screenHeight - renderBoxOffset.dy - renderBoxSize.height;
+      final spaceAbove = renderBoxOffset.dy;
+
+      switch (widget.dropdownStyle.expandDirection) {
+        case ExpandDirection.down:
+          _openingShowOnTop = false;
+          break;
+        case ExpandDirection.up:
+          _openingShowOnTop = true;
+          break;
+        case ExpandDirection.auto:
+          _openingShowOnTop = spaceBelow < widget.dropdownStyle.maxHeight &&
+              spaceAbove > spaceBelow;
+          break;
+      }
+    }
+
     _expandCtrl.motion = widget.openMotion.toMotion();
     _arrowCtrl.motion = widget.openMotion.toMotion();
     _expandCtrl.animateTo(1);
@@ -600,7 +629,7 @@ class _M3EDropdownMenuState<T> extends State<M3EDropdownMenu<T>>
       builder: (formState) {
         return OverlayPortal(
           controller: _portalController,
-          overlayChildBuilder: (_) => _buildOverlay(),
+          overlayChildBuilder: (_) => _buildOverlay(formState),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -622,7 +651,7 @@ class _M3EDropdownMenuState<T> extends State<M3EDropdownMenu<T>>
                         child: Focus(
                           focusNode: _focusNode,
                           canRequestFocus: widget.enabled,
-                          child: _buildField(context),
+                          child: _buildField(context, formState),
                         ),
                       );
                     },
@@ -635,8 +664,11 @@ class _M3EDropdownMenuState<T> extends State<M3EDropdownMenu<T>>
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   child: Text(
                     formState.errorText!,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.error,
+                    style: (widget.fieldStyle.errorStyle ??
+                            Theme.of(context).textTheme.bodySmall)
+                        ?.copyWith(
+                      color: widget.fieldStyle.errorStyle?.color ??
+                          Theme.of(context).colorScheme.error,
                     ),
                   ),
                 ),
@@ -650,7 +682,7 @@ class _M3EDropdownMenuState<T> extends State<M3EDropdownMenu<T>>
 
   // ── Overlay (dropdown panel) ──
 
-  Widget _buildOverlay() {
+  Widget _buildOverlay(FormFieldState<List<M3EDropdownItem<T>>?> formState) {
     final renderBox = context.findRenderObject() as RenderBox?;
     if (renderBox == null || !renderBox.attached) {
       return const SizedBox.shrink();
@@ -663,18 +695,21 @@ class _M3EDropdownMenuState<T> extends State<M3EDropdownMenu<T>>
     final spaceAbove = renderBoxOffset.dy;
 
     final bool showOnTop;
-    switch (widget.dropdownStyle.expandDirection) {
-      case ExpandDirection.down:
-        showOnTop = false;
-        break;
-      case ExpandDirection.up:
-        showOnTop = true;
-        break;
-      case ExpandDirection.auto:
-        showOnTop =
-            spaceBelow < widget.dropdownStyle.maxHeight &&
-            spaceAbove > spaceBelow;
-        break;
+    if (_openingShowOnTop != null) {
+      showOnTop = _openingShowOnTop!;
+    } else {
+      switch (widget.dropdownStyle.expandDirection) {
+        case ExpandDirection.down:
+          showOnTop = false;
+          break;
+        case ExpandDirection.up:
+          showOnTop = true;
+          break;
+        case ExpandDirection.auto:
+          showOnTop = spaceBelow < widget.dropdownStyle.maxHeight &&
+              spaceAbove > spaceBelow;
+          break;
+      }
     }
 
     final marginOffset = widget.dropdownStyle.marginTop == 0
@@ -728,20 +763,24 @@ class _M3EDropdownMenuState<T> extends State<M3EDropdownMenu<T>>
 
   // ── Field ──
 
-  Widget _buildField(BuildContext context) {
+  Widget _buildField(
+    BuildContext context,
+    FormFieldState<List<M3EDropdownItem<T>>?> formState,
+  ) {
     final theme = Theme.of(context);
     final cs = theme.colorScheme;
     final fd = widget.fieldStyle;
 
     final bgColor = fd.backgroundColor ?? cs.surfaceContainerHighest;
     final fgColor = fd.foregroundColor ?? cs.onSurface;
-    final borderSide =
-        (_controller.isOpen ? fd.focusedBorder : fd.border) ?? BorderSide.none;
+    final borderSide = (formState.hasError
+            ? fd.errorBorder
+            : (_controller.isOpen ? fd.focusedBorder : fd.border)) ??
+        BorderSide.none;
 
     Widget? trailing;
     if (_isLoading) {
-      trailing =
-          fd.loadingWidget ??
+      trailing = fd.loadingWidget ??
           const SizedBox(
             width: 18,
             height: 18,
@@ -761,7 +800,7 @@ class _M3EDropdownMenuState<T> extends State<M3EDropdownMenu<T>>
               _controller.clearAll();
               _formFieldKey.currentState?.didChange(_controller.selectedItems);
             },
-            child: Icon(Icons.clear, color: fgColor, size: 20),
+            child: fd.clearIcon ?? Icon(Icons.clear, color: fgColor, size: 20),
           ),
         ),
       );
@@ -891,7 +930,7 @@ class _M3EDropdownMenuState<T> extends State<M3EDropdownMenu<T>>
                 return Colors.transparent;
               }),
               mouseCursor: widget.enabled
-                  ? SystemMouseCursors.click
+                  ? (fd.mouseCursor ?? SystemMouseCursors.click)
                   : SystemMouseCursors.forbidden,
               onTap: widget.enabled ? _toggle : null,
               onHover: (hover) => setState(() => _isHoveredField = hover),
@@ -1295,6 +1334,7 @@ class _M3EDropdownMenuState<T> extends State<M3EDropdownMenu<T>>
         controller: _searchTextController,
         autofocus: sd.autofocus,
         style: sd.textStyle ?? theme.textTheme.bodyMedium,
+        mouseCursor: sd.mouseCursor,
         decoration: InputDecoration(
           hintText: sd.hintText,
           hintStyle: sd.hintStyle,

@@ -163,6 +163,7 @@ class _M3EDropdownMenuItemWidgetState<T>
               }
               return Colors.transparent;
             }),
+            mouseCursor: id.mouseCursor,
             onTap: item.disabled ? null : widget.onTap,
             onHover: (hover) => setState(() => _isHovered = hover),
             onTapDown: (_) => setState(() => _isPressed = true),

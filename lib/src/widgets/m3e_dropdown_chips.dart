@@ -128,46 +128,49 @@ class M3ESpringChipState<T> extends State<M3ESpringChip<T>>
 
   Widget _buildChipBody() {
     final cd = widget.cd;
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: cd.borderRadius,
-        color: widget.enabled ? widget.chipColor : Colors.grey.withAlpha(30),
-        border: cd.border != null ? Border.fromBorderSide(cd.border!) : null,
-      ),
-      padding: cd.padding,
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            widget.item.label,
-            style: widget.labelStyle?.copyWith(
-                  color: widget.enabled
-                      ? widget.labelStyle?.color
-                      : Colors.grey,
-                ) ??
-                TextStyle(color: widget.enabled ? null : Colors.grey),
-          ),
-          if (widget.enabled) ...[
-            const SizedBox(width: 4),
-            Semantics(
-              label: 'Remove ${widget.item.label}',
-              button: true,
-              child: Tooltip(
-                message: 'Remove ${widget.item.label}',
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: widget.onRemove,
-                  child: widget.cd.deleteIcon ??
-                      Icon(
-                        Icons.close,
-                        size: 16,
-                        color: widget.cs.onSecondaryContainer,
-                      ),
+    return MouseRegion(
+      cursor: cd.mouseCursor ?? SystemMouseCursors.click,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: cd.borderRadius,
+          color: widget.enabled ? widget.chipColor : Colors.grey.withAlpha(30),
+          border: cd.border != null ? Border.fromBorderSide(cd.border!) : null,
+        ),
+        padding: cd.padding,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              widget.item.label,
+              style: widget.labelStyle?.copyWith(
+                    color: widget.enabled
+                        ? widget.labelStyle?.color
+                        : Colors.grey,
+                  ) ??
+                  TextStyle(color: widget.enabled ? null : Colors.grey),
+            ),
+            if (widget.enabled) ...[
+              const SizedBox(width: 4),
+              Semantics(
+                label: 'Remove ${widget.item.label}',
+                button: true,
+                child: Tooltip(
+                  message: 'Remove ${widget.item.label}',
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: widget.onRemove,
+                    child: widget.cd.deleteIcon ??
+                        Icon(
+                          Icons.close,
+                          size: 16,
+                          color: widget.cs.onSecondaryContainer,
+                        ),
+                  ),
                 ),
               ),
-            ),
+            ],
           ],
-        ],
+        ),
       ),
     );
   }
