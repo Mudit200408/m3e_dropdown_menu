@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'm3e_motion.dart';
+
 /// Controls the direction in which the dropdown overlay expands.
 ///
 /// * [ExpandDirection.auto]: Automatically determines the direction based on
@@ -18,7 +20,7 @@ enum ExpandDirection {
 }
 
 /// Visual styling for the M3E dropdown field (the tap target).
-class M3EDropdownFieldDecoration {
+class M3EDropdownFieldStyle {
   /// Hint text shown when nothing is selected.
   final String? hintText;
 
@@ -86,10 +88,25 @@ class M3EDropdownFieldDecoration {
   ///
   /// When non-null the field animates from [borderRadius] to this value
   /// with a snappy spring when the dropdown opens, and back when it closes.
-  final BorderRadius? expandedBorderRadius;
+  final double? selectedBorderRadius;
 
-  /// Creates a [M3EDropdownFieldDecoration].
-  const M3EDropdownFieldDecoration({
+  /// Border radius of the field when hovered.
+  final double? hoverRadius;
+
+  /// Border radius of the field when pressed.
+  final double? pressedRadius;
+
+  /// Splash factory for tap feedback on the field.
+  final InteractiveInkFeatureFactory? splashFactory;
+
+  /// Splash color for the ripple effect.
+  final Color? splashColor;
+
+  /// Highlight color when the field is pressed.
+  final Color? highlightColor;
+
+  /// Creates a [M3EDropdownFieldStyle].
+  const M3EDropdownFieldStyle({
     this.hintText,
     this.hintStyle,
     this.selectedTextStyle,
@@ -104,14 +121,19 @@ class M3EDropdownFieldDecoration {
     this.showArrow = true,
     this.loadingWidget,
     this.borderRadius,
-    this.expandedBorderRadius,
+    this.selectedBorderRadius,
+    this.hoverRadius,
+    this.pressedRadius,
+    this.splashFactory,
+    this.splashColor,
+    this.highlightColor,
     this.showClearIcon = false,
     this.animateSuffixIcon = true,
   });
 }
 
 /// Visual styling for the dropdown panel (the list of items).
-class M3EDropdownDecoration {
+class M3EDropdownStyle {
   /// Background color of the dropdown panel.
   final Color? backgroundColor;
 
@@ -149,8 +171,8 @@ class M3EDropdownDecoration {
   /// When set, overrides the widget-level [M3EDropdownMenu.containerRadius].
   final double? containerRadius;
 
-  /// Creates a [M3EDropdownDecoration].
-  const M3EDropdownDecoration({
+  /// Creates a [M3EDropdownStyle].
+  const M3EDropdownStyle({
     this.backgroundColor,
     this.elevation = 3,
     this.maxHeight = 350,
@@ -165,7 +187,7 @@ class M3EDropdownDecoration {
 }
 
 /// Visual styling for chips displayed in the field.
-class M3EChipDecoration {
+class M3EChipStyle {
   /// Chip background color.
   final Color? backgroundColor;
 
@@ -196,28 +218,18 @@ class M3EChipDecoration {
   /// Maximum visible chips before showing "+N more".
   final int? maxDisplayCount;
 
-  /// Spring stiffness for the chip entry (scale-in) animation.
+  /// Spring motion for the chip entry (scale-in) animation.
   ///
-  /// Defaults to `380`.
-  final double openStiffness;
+  /// Defaults to [M3EMotion.expressiveSpatialDefault].
+  final M3EMotion openMotion;
 
-  /// Spring damping for the chip entry (scale-in) animation.
+  /// Spring motion for the chip exit (scale-out / pop) animation.
   ///
-  /// Defaults to `0.8`.
-  final double openDamping;
+  /// Defaults to [M3EMotion.expressiveSpatialDefault].
+  final M3EMotion closeMotion;
 
-  /// Spring stiffness for the chip exit (scale-out / pop) animation.
-  ///
-  /// Defaults to `380`.
-  final double closeStiffness;
-
-  /// Spring damping for the chip exit (scale-out / pop) animation.
-  ///
-  /// Defaults to `0.8`.
-  final double closeDamping;
-
-  /// Creates a [M3EChipDecoration].
-  const M3EChipDecoration({
+  /// Creates a [M3EChipStyle].
+  const M3EChipStyle({
     this.backgroundColor,
     this.labelStyle,
     this.deleteIcon,
@@ -228,15 +240,13 @@ class M3EChipDecoration {
     this.runSpacing = 6,
     this.wrap = true,
     this.maxDisplayCount,
-    this.openStiffness = 380,
-    this.openDamping = 0.8,
-    this.closeStiffness = 380,
-    this.closeDamping = 0.8,
+    this.openMotion = M3EMotion.expressiveSpatialDefault,
+    this.closeMotion = M3EMotion.expressiveSpatialDefault,
   });
 }
 
 /// Visual styling for the search field inside the dropdown.
-class M3ESearchDecoration {
+class M3ESearchStyle {
   /// Hint text shown in the search field.
   final String hintText;
 
@@ -283,8 +293,8 @@ class M3ESearchDecoration {
   /// Defaults to `EdgeInsets.fromLTRB(12, 8, 12, 4)`.
   final EdgeInsetsGeometry margin;
 
-  /// Creates a [M3ESearchDecoration].
-  const M3ESearchDecoration({
+  /// Creates a [M3ESearchStyle].
+  const M3ESearchStyle({
     this.hintText = 'Search…',
     this.hintStyle,
     this.textStyle,
@@ -304,7 +314,7 @@ class M3ESearchDecoration {
 }
 
 /// Visual styling for individual items inside the dropdown list.
-class M3EDropdownItemDecoration {
+class M3EDropdownItemStyle {
   /// Item background color.
   final Color? backgroundColor;
 
@@ -340,8 +350,8 @@ class M3EDropdownItemDecoration {
 
   /// Inner radius applied to middle dropdown item cards.
   ///
-  /// Defaults to `4.0`.
-  final double? innerRadius;
+  /// Defaults to `6.0`.
+  final double innerRadius;
 
   /// Gap between items.
   ///
@@ -358,8 +368,27 @@ class M3EDropdownItemDecoration {
   /// When null, falls back to [outerRadius] (or its default of `12.0`).
   final double? selectedBorderRadius;
 
-  /// Creates a [M3EDropdownItemDecoration].
-  const M3EDropdownItemDecoration({
+  /// Radius applied to the item when hovered.
+  ///
+  /// Defaults to `8.0`.
+  final double hoverRadius;
+
+  /// Radius applied to the item when pressed.
+  ///
+  /// Defaults to `4.0`.
+  final double pressedRadius;
+
+  /// Splash factory for tap feedback on individual items.
+  final InteractiveInkFeatureFactory? splashFactory;
+
+  /// Splash color for the ripple effect.
+  final Color? splashColor;
+
+  /// Highlight color when the item is pressed.
+  final Color? highlightColor;
+
+  /// Creates a [M3EDropdownItemStyle].
+  const M3EDropdownItemStyle({
     this.backgroundColor,
     this.selectedBackgroundColor,
     this.disabledBackgroundColor,
@@ -370,9 +399,14 @@ class M3EDropdownItemDecoration {
     this.selectedTextStyle,
     this.selectedIcon,
     this.outerRadius,
-    this.innerRadius,
+    this.innerRadius = 10.0,
     this.itemGap,
     this.itemPadding = const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
     this.selectedBorderRadius,
+    this.hoverRadius = 12.0,
+    this.pressedRadius = 6.0,
+    this.splashFactory,
+    this.splashColor,
+    this.highlightColor,
   });
 }
