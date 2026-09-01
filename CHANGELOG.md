@@ -1,3 +1,7 @@
+## 1.0.1
+
+- dropdown: update container tokens, selection radius, and overflow handling
+
 ## 1.0.0
 
 - pubspec: migrate to standalone material_ui package for flutter 3.47

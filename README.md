@@ -36,7 +36,7 @@ Add `m3e_dropdown_menu` and `material_ui` to your `pubspec.yaml`:
 ```yaml
 dependencies:
   material_ui: ^1.0.0
-  m3e_dropdown_menu: ^1.0.0
+  m3e_dropdown_menu: ^1.0.1
 ```
 
 ```dart
