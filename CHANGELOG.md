@@ -1,3 +1,9 @@
+## 1.0.2
+
+- dropdown: add keyboard navigation and focus ring support
+- dropdown: update splash factory doc comment to reference InkSparkle
+- dropdown: add spring-driven pressed scale micro-interaction
+
 ## 1.0.1
 
 - dropdown: update container tokens, selection radius, and overflow handling

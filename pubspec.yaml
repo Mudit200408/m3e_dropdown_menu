@@ -1,6 +1,6 @@
 name: m3e_dropdown_menu
 description: "A Flutter package providing Material 3 Expressive Dropdown Menu with spring physics and extensive customization options."
-version: 1.0.1
+version: 1.0.2
 homepage: https://github.com/Mudit200408/m3e_dropdown_menu
 repository:  https://github.com/Mudit200408/m3e_dropdown_menu
 issue_tracker: https://github.com/Mudit200408/m3e_dropdown_menu/issues

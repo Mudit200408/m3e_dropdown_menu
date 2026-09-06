@@ -10,6 +10,9 @@ It automatically calculates and draws corners to fit exactly the [Material 3 Exp
 
 ## 🚀 Features
 
+- **Keyboard Navigation & Accessibility:** Native keyboard control with <kbd>Enter</kbd> / <kbd>Space</kbd> / <kbd>↓</kbd> to open, <kbd>↑</kbd> / <kbd>↓</kbd> to navigate, <kbd>Enter</kbd> to select, <kbd>Esc</kbd> to dismiss, and <kbd>Backspace</kbd> / <kbd>Delete</kbd> to remove chips.
+- **M3E Focus Ring Overlays:** High-precision, zero-layout-impact focus rings with customizable color, stroke width, and gap around fields, menu items, and chips.
+- **Spring-Driven Pressed Scale:** Tactile micro-interactions scaling elements smoothly on press with configurable spring motion curves.
 - **Interactive Radius Morphing:** Snappy, high-fidelity `BorderRadius` morphing on hover and press for both field and items.
 - **Dual-Speed Animations:** Fine-tuned durations (20ms for selection, 40ms for interactions) for an incredibly responsive feel.
 - **Premium Interaction Model:** Subtle opacity-based overlay fades that complement structural motion better than standard ripples.
@@ -36,7 +39,7 @@ Add `m3e_dropdown_menu` and `material_ui` to your `pubspec.yaml`:
 ```yaml
 dependencies:
   material_ui: ^1.0.0
-  m3e_dropdown_menu: ^1.0.1
+  m3e_dropdown_menu: ^1.0.2
 ```
 
 ```dart
@@ -177,7 +180,12 @@ M3EDropdownMenu<int>.future(
 | `selectedBorderRadius` | `double?` | - | Radius when the dropdown is expanded. |
 | `hoverRadius` | `double?` | - | Radius used when the field is hovered. |
 | `pressedRadius` | `double?` | - | Radius used when the field is pressed. |
-| `splashFactory` | `InteractiveInkFeatureFactory?` | `NoSplash` | Type of splash effect for tap feedback. |
+| `pressedScale` | `double?` | `null` | Scale factor applied to field content when pressed (e.g. `0.98`). |
+| `pressedMotion` | `M3EMotion` | `expressiveSpatialFast` | Spring motion used for the pressed scale animation. |
+| `focusRingColor` | `Color?` | - | Custom focus ring color (defaults to `ColorScheme.primary`). |
+| `focusRingWidth` | `double` | `2.0` | Stroke width of the focus ring. |
+| `focusRingGap` | `double` | `0.0` | Gap between the field border and focus ring. |
+| `splashFactory` | `InteractiveInkFeatureFactory?` | `NoSplash` | Type of splash effect for tap feedback (e.g. `InkSparkle.splashFactory`). |
 | `errorBorder` | `BorderSide?` | - | Border used when validation fails. |
 | `errorStyle` | `TextStyle?` | - | Style for the validation error text. |
 | `mouseCursor` | `MouseCursor?` | `SystemMouseCursors.click` | Cursor used when hovering. |
@@ -192,10 +200,29 @@ M3EDropdownMenu<int>.future(
 | `innerRadius` | `double` | `6.0` | Base radius for internal item corners. |
 | `hoverRadius` | `double` | `8.0` | Radius used when an item is hovered. |
 | `pressedRadius` | `double` | `4.0` | Radius used when an item is pressed. |
+| `pressedScale` | `double?` | `null` | Scale factor applied to item content when pressed (e.g. `0.98`). |
+| `pressedMotion` | `M3EMotion` | `expressiveSpatialFast` | Spring motion used for the pressed scale animation. |
+| `focusRingColor` | `Color?` | - | Custom focus ring color (defaults to `ColorScheme.primary`). |
+| `focusRingWidth` | `double` | `2.0` | Stroke width of the focus ring. |
+| `focusRingGap` | `double` | `0.0` | Gap between the item border and focus ring. |
 | `selectedBorderRadius` | `double?` | - | Radius used when an item is selected. |
 | `mouseCursor` | `MouseCursor?` | - | Cursor used when hovering over an item. |
 | `backgroundColor` / `textColor` | `Color?` | - | Colors for the items. |
 | `selectedBackgroundColor` / `selectedTextColor` | `Color?` | - | Colors for items when selected. |
+
+**`M3EChipStyle` Parameters:**
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `borderRadius` | `BorderRadius` | `BorderRadius.circular(20)` | Resting radius of the chips. |
+| `spacing` / `runSpacing` | `double` | `6.0` / `6.0` | Spacing between chips horizontally and vertically. |
+| `maxDisplayCount` | `int?` | `null` | Maximum visible chips before showing "+N more". |
+| `pressedScale` | `double?` | `null` | Scale factor applied to chip when pressed (e.g. `0.95`). |
+| `pressedMotion` | `M3EMotion` | `expressiveSpatialFast` | Spring motion used for the pressed scale animation. |
+| `focusRingColor` | `Color?` | - | Custom focus ring color (defaults to `ColorScheme.primary`). |
+| `focusRingWidth` | `double` | `2.0` | Stroke width of the focus ring. |
+| `focusRingGap` | `double` | `0.0` | Gap between the chip and focus ring. |
+| `mouseCursor` | `MouseCursor?` | - | Cursor used when hovering over chips. |
+| `openMotion` / `closeMotion` | `M3EMotion` | `expressiveSpatialDefault` | Spring motions for chip entry and exit animations. |
 
 ---
 
