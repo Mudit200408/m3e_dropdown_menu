@@ -5,7 +5,7 @@
 
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:m3e_core/m3e_core.dart';
+import 'package:m3e_dropdown_menu/m3e_dropdown_menu.dart';
 
 void main() {
   group('M3EDropdown Style Tests (pressedScale)', () {
